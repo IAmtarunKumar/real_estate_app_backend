@@ -56,9 +56,7 @@ const leadSchema = mongoose.Schema({
   DOB: { type: String, required: false },
   source: { type: String, required: false },
   PropertyType: { type: String, required: false },
-
 });
-
 const Lead = mongoose.model("lead", leadSchema);
 
 module.exports = Lead;
