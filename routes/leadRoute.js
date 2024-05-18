@@ -118,8 +118,6 @@ router.post("/post", verifyToken, async (req, res) => {
                 //   payment,
                 //   productName,
                 //   dublicate : true
-
-
                 leadId, date: formatLeadDate, status: "New Lead", name, email, mobile, remarks, salesExecutiveName, salesExecutiveEmail, Profession, panNumber, City, State, Address, DOB, source, PropertyType, dublicate: true
             });
 

@@ -135,6 +135,7 @@ router.post("/changeTeamPassword",verifyToken, async (req, res) => {
     }
 })
 
+//update user
 router.post("/Update",verifyToken, async (req, res) => {
     let { email, name, profile, userStatus, newPassword, confirmPassword } = req.body;
     console.log("req.body", req.body)
@@ -193,7 +194,6 @@ router.post("/delete",verifyToken, async (req, res) => {
     }
 });
 
-//
 //
 router.get("/payNotifications", verifyToken, async (req, res) => {
     const email = req.foundUser.email;
@@ -254,8 +254,6 @@ router.get("/payNotifications", verifyToken, async (req, res) => {
 });
 
 
-
-
 // user post
 router.post("/post", async (req, res) => {
     console.log("signup api req.body" , req.body)
@@ -293,9 +291,7 @@ router.post("/post", async (req, res) => {
 });
 
 
-
 //get all user 
-
 router.get("/allUser" ,verifyToken, async(req,res)=>{
     try{
         let allUser = await User.find()
@@ -306,25 +302,6 @@ router.get("/allUser" ,verifyToken, async(req,res)=>{
         return res.status(500).send(`Internal server error ${error.message}`)
     }
 })
-
-
-//bcrytp genrate for db password changec
-router.post("/password" , async(req,res)=>{
-    try{
-        console.log("password req.body" , req.body)
-        // const bcrypt = require("bcrypt")
-        let {password} = req.body
-    
-        const newPasswordHash = await bcrypt.hash(password, 10);
-        return res.status(200).send(newPasswordHash)
-    }catch(error){
-        console.log("error : ", error)
-        return res.status(500).send(`Internal server error ${error.message}`)
-    }
-})
-
-
-
 
 
 

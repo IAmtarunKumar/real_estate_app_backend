@@ -58,7 +58,7 @@ async function Login(req, res) {
             `${process.env.JWTPRIVATEKEY}`,
             { expiresIn: "1440000000000" }   //5 zero are extra
         );
-        return res.status(200).send({ token, message: "Signin Successful!" });
+        return res.status(200).send({ token, message: "Signin Successful!" , userData });
     }
     catch (err) {
         console.log(`internal server error - ${err.message}`)
