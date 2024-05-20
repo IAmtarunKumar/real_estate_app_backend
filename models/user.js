@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
     name: { type: String, required: true },
     mobile: { type: String, required: true },
     profile: { type: String, required: true },//superAdmin/salesTl/salesExecutive/operationsTl/operationsExecutive
-    password: { type: String, required: true },
+    password: { type: String, required: false },
     paidDateCreated: { type: String, required: false },
     orgSubscriptionAmount: { type: String, required: false },
     currentOtp: { type: String, required: false },

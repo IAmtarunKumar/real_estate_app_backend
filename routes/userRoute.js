@@ -103,7 +103,7 @@ router.post("/resetPassword", verifyToken,async (req, res) => {
 })
 
 
-router.post("/changeTeamPassword",verifyToken, async (req, res) => {
+router.post("/forgetPassword", async (req, res) => {
     try {
         const { newPassword, confirmPassword, email } = req.body;
         const foundUser = await User.findOne({ email })
