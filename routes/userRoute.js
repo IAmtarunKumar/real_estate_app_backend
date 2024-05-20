@@ -303,6 +303,18 @@ router.get("/allUser" ,verifyToken, async(req,res)=>{
     }
 })
 
+router.post("/userByEmail" ,verifyToken, async(req,res)=>{
+    try{
+        const email = req.body.email
+        let userData = await User.find({email})
+        return res.status(200).send(userData)
+
+    }catch(error){
+        console.log("error:" , error)
+        return res.status(500).send(`Internal server error ${error.message}`)
+    }
+})
+
 
 
 module.exports = router
