@@ -140,7 +140,7 @@ router.post("/Update",verifyToken, async (req, res) => {
     let { email, name, profile, userStatus, newPassword, confirmPassword } = req.body;
     console.log("req.body", req.body)
 
-    if (!email || !name || !profile) return res.status(400).send("provide all the required data!")
+    // if (!email || !name || !profile) return res.status(400).send("provide all the required data!")
     try {
         if (newPassword !== undefined && confirmPassword !== undefined) {
             if (!newPassword || newPassword !== confirmPassword) {
