@@ -186,40 +186,8 @@ router.post("/update", async (req, res) => {
     }
 });
 
-//product update
-router.post("/productUpdate", async (req, res) => {
-    try {
 
-        let { leadId, rowId, name, date, quantity, duration, payment, renewed } = req.body
-        const foundLead = await Lead.findOne({ leadId })
-        console.log("found lead", foundLead)
-        const productDetails = foundLead.productDetails
-        console.log("payment details", productDetails)
-        let updateProductDetails = productDetails.map((data) => {
 
-            // console.log("dataaaaaaa" , data )
-
-            if (data.rowId === rowId) {
-                console.log("if condition is working")
-                data.renewed = true
-            }
-        })
-
-        console.log("update", updateProductDetails)
-        rowId = Math.floor(1000 + Math.random() * 9000)
-
-        let object = { rowId, name, date, quantity, duration, payment, renewed }
-        productDetails.push(object)
-        const updatedUser = await Lead.findOneAndUpdate({ leadId }, { productDetails }, {
-            new: true,
-        });
-
-        return res.status(200).send("Product update successfully")
-    } catch (error) {
-        console.log("error:", error)
-        return res.status(500).send(`Internal server error ${error.message}`)
-    }
-})
 
 //lead delete
 router.post("/delete", async (req, res) => {

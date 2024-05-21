@@ -136,7 +136,7 @@ router.post("/forgetPassword", async (req, res) => {
 })
 
 //update user
-router.post("/Update",verifyToken, async (req, res) => {
+router.post("/Update", async (req, res) => {
     let { email, name, profile, userStatus, newPassword, confirmPassword } = req.body;
     console.log("req.body", req.body)
 
