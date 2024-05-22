@@ -12,7 +12,7 @@ const leadRouter = require("./routes/leadRoute.js")
 const dashboardRouter = require("./routes/dashboardRoute.js")
 const Login = require("./Login")
 
-const testRouter = require("./routes/testRoute.js")
+// const testRouter = require("./routes/testRoute.js")
 
 
 app.use(express.json())

@@ -137,7 +137,7 @@ router.post("/forgetPassword", async (req, res) => {
 
 //update user
 router.post("/Update", async (req, res) => {
-    let { email, name, profile, userStatus, newPassword, confirmPassword } = req.body;
+    let { email, name, profile, userStatus, newPassword, confirmPassword , mobile } = req.body;
     console.log("req.body", req.body)
 
     // if (!email || !name || !profile) return res.status(400).send("provide all the required data!")
@@ -162,7 +162,7 @@ router.post("/Update", async (req, res) => {
             }
         }
 
-        const updatedUser = await User.findOneAndUpdate({ email }, { email, name, profile, userStatus }, {
+        const updatedUser = await User.findOneAndUpdate({ email }, { email, name, profile, userStatus  , mobile}, {
             new: true,
         });
         if (!updatedUser) {
