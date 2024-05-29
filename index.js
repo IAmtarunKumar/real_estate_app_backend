@@ -10,6 +10,8 @@ const Db = require("./db.js")
 const userRouter = require("./routes/userRoute.js")
 const leadRouter = require("./routes/leadRoute.js")
 const dashboardRouter = require("./routes/dashboardRoute.js")
+
+
 const Login = require("./Login")
 
 const testRouter = require("./routes/testRoute.js")
@@ -18,6 +20,7 @@ const testRouter = require("./routes/testRoute.js")
 app.use(express.json())
 const bodyParser = require("body-parser")
 const taskRouter = require("./routes/taskRoute.js")
+const siteVisitRouter = require("./routes/siteVisitRoute.js")
 
 ///
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -39,6 +42,10 @@ app.use("/user", userRouter)
 app.use("/lead", leadRouter)
 app.use("/dashboard", dashboardRouter)
 app.use("/task" , taskRouter)
+app.use("/sitevisit" , siteVisitRouter)
+
+
+
 app.use("/test" , testRouter)
 
 //
