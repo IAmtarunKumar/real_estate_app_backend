@@ -109,11 +109,11 @@ router.post("/update",verifyToken, async (req, res) => {
 router.post("/delete",verifyToken,async (req, res) => {
 
     console.log("check whats coming in body delete", req.body)
-    const leadId = req.body.leadId;
+    const siteVisitId = req.body.siteVisitId;
     try {
-        const foundUser = await Sitevisit.findOne({ leadId })
+        const foundUser = await Sitevisit.findOne({ siteVisitId })
         if (!foundUser) return res.status(400).send("Site visit not found!")
-        const deletedUser = await Sitevisit.findOneAndDelete({ leadId });
+        const deletedUser = await Sitevisit.findOneAndDelete({ siteVisitId });
         if (!deletedUser) {
             return res.status(400).send(`Site visit not deleted!`);
         }
