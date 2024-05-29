@@ -107,7 +107,7 @@ router.post("/update",verifyToken, async (req, res) => {
 //lead delete
 router.post("/delete",async (req, res) => {
 
-    console.log("check whats coming in body delete", req.body)
+    console.log("check whats coming in body delete...", req.body)
     const siteVisitId = req.body.siteVisitId;
     
 
