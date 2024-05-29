@@ -89,7 +89,6 @@ router.post("/update",verifyToken, async (req, res) => {
             salesExecutiveEmail = foundUser.email
         }
      
-
         const updatedUser = await Sitevisit.findOneAndUpdate({ siteVisitId }, {leadId , siteVisitDate, date , project, propertyType , salesExecutiveEmail ,  salesExecutiveName ,  status , notes}, {
             new: true,
         });
@@ -110,8 +109,16 @@ router.post("/delete",verifyToken,async (req, res) => {
 
     console.log("check whats coming in body delete", req.body)
     const siteVisitId = req.body.siteVisitId;
+
+    
+    console.log("site visit id" , siteVisitId)
+
     try {
-        const foundUser = await Sitevisit.findOne({ siteVisitId })
+        const foundUser = await Sitevisit.findOne({ siteVisitId : siteVisitId })
+        
+
+        console.log("found site visit" , foundUser)
+
         if (!foundUser) return res.status(400).send("Site visit not found!")
         const deletedUser = await Sitevisit.findOneAndDelete({ siteVisitId });
         if (!deletedUser) {
