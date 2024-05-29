@@ -42,7 +42,7 @@ router.post("/siteVisitById",verifyToken, async (req, res) => {
 
 //site visit post
 router.post("/post", verifyToken, async (req, res) => {
-    const {  leadId , date ,  project , propertyType , salesExecutiveEmail , salesExecutiveName  , status , notes } = req.body
+    const {  leadId  ,siteVisitDate ,   project , propertyType , salesExecutiveEmail , salesExecutiveName  , status , notes } = req.body
     try {
         let id = await generateUniqueId()
     
@@ -55,7 +55,8 @@ router.post("/post", verifyToken, async (req, res) => {
             salesExecutiveEmail,
             salesExecutiveName,
             status,
-            notes
+            notes,
+            siteVisitDate
         })
         await postSiteVisit.save()
         return res.status(200).send("Site visit posted successfully")
@@ -74,7 +75,7 @@ router.post("/post", verifyToken, async (req, res) => {
 //lead update
 router.post("/update",verifyToken, async (req, res) => {
     console.log("site visit update api calling", req.body)
-    const { leadId , siteVisitId , date ,  project , propertyType , salesExecutiveEmail , salesExecutiveName  , status , notes } = req.body
+    const { leadId , siteVisitId ,siteVisitDate, date ,  project , propertyType , salesExecutiveEmail , salesExecutiveName  , status , notes } = req.body
 
 
     try {
@@ -85,7 +86,7 @@ router.post("/update",verifyToken, async (req, res) => {
         }
      
 
-        const updatedUser = await Sitevisit.findOneAndUpdate({ siteVisitId }, {leadId , date , project, propertyType , salesExecutiveEmail ,  salesExecutiveName ,  status , notes}, {
+        const updatedUser = await Sitevisit.findOneAndUpdate({ siteVisitId }, {leadId , siteVisitDate, date , project, propertyType , salesExecutiveEmail ,  salesExecutiveName ,  status , notes}, {
             new: true,
         });
         if (!updatedUser) {

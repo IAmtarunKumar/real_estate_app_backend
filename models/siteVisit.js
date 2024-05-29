@@ -5,6 +5,9 @@ const siteVisitSchema = mongoose.Schema({
     leadId: { type: String, required: false },
     siteVisitId: { type: String, required: false },
     date: { type: String, required: false },
+
+    siteVisitDate: { type: String, required: false },
+
     project: { type: String, required: false },
     propertyType: { type: String, required: false },  //flat , duplex
     salesExecutiveName: { type: String, required: false },
