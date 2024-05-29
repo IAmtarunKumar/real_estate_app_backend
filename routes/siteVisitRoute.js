@@ -3,6 +3,7 @@ const Sitevisit = require("../models/siteVisit")
 const formattedDate = require("../function/formatedDate")
 const generateUniqueId = require("../function/uniqueId")
 const verifyToken = require("../middleware/auth")
+const Lead = require("../models/lead")
 const router =  express.Router()
 
 router.get("/" , async(req,res)=>{
@@ -13,7 +14,6 @@ router.get("/" , async(req,res)=>{
         return res.status(500).send(`Internal server error ${error.message}`)
     }
 })
-
 
 
 //get all site visit
@@ -44,10 +44,16 @@ router.post("/siteVisitById",verifyToken, async (req, res) => {
 router.post("/post", verifyToken, async (req, res) => {
     const {  leadId  ,siteVisitDate ,   project , propertyType , salesExecutiveEmail , salesExecutiveName  , status , notes } = req.body
     try {
+
+        let leadDetails = await Lead.findOne({leadId})
+        let {name , email ,salesExecutiveEmail , salesExecutiveName , project  } = leadDetails
+
         let id = await generateUniqueId()
     
         const postSiteVisit = new Sitevisit({
             siteVisitId : id,
+            name,
+            email,
             leadId,
             date : formattedDate ,
             project,
@@ -68,8 +74,6 @@ router.post("/post", verifyToken, async (req, res) => {
 
   
 });
-
-
 
 
 //lead update
@@ -118,10 +122,6 @@ router.post("/delete",verifyToken,async (req, res) => {
         return res.status(500).send(`Internal Server Error ${error.message}`);
     }
 });
-
-
-
-
 
 
 module.exports = router

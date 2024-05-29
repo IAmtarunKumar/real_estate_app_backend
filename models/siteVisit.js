@@ -5,6 +5,8 @@ const siteVisitSchema = mongoose.Schema({
     leadId: { type: String, required: false },
     siteVisitId: { type: String, required: false },
     date: { type: String, required: false },
+    name: { type: String, required: false },
+    email: { type: String, required: false },
 
     siteVisitDate: { type: String, required: false },
 
