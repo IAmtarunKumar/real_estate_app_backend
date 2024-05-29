@@ -2,6 +2,7 @@ const express = require("express")
 const Sitevisit = require("../models/siteVisit")
 const formattedDate = require("../function/formatedDate")
 const generateUniqueId = require("../function/uniqueId")
+const verifyToken = require("../middleware/auth")
 const router =  express.Router()
 
 router.get("/" , async(req,res)=>{
@@ -16,7 +17,7 @@ router.get("/" , async(req,res)=>{
 
 
 //get all site visit
-router.get("/get", async (req, res) => {
+router.get("/get",verifyToken,async (req, res) => {
     try {
         const allLead = await Sitevisit.find()
         return res.status(200).send(allLead)
@@ -28,7 +29,7 @@ router.get("/get", async (req, res) => {
 
 //get sitevisit by id
 
-router.post("/siteVisitById", async (req, res) => {
+router.post("/siteVisitById",verifyToken, async (req, res) => {
     try {
         const leadId = req.body.leadId
         const allLead = await Sitevisit.findOne({ leadId })
@@ -71,7 +72,7 @@ router.post("/post", verifyToken, async (req, res) => {
 
 
 //lead update
-router.post("/update", async (req, res) => {
+router.post("/update",verifyToken, async (req, res) => {
     console.log("site visit update api calling", req.body)
     const { leadId , siteVisitId , date ,  project , propertyType , salesExecutiveEmail , salesExecutiveName  , status , notes } = req.body
 
@@ -99,10 +100,8 @@ router.post("/update", async (req, res) => {
 });
 
 
-
-
 //lead delete
-router.post("/delete", async (req, res) => {
+router.post("/delete",verifyToken,async (req, res) => {
 
     console.log("check whats coming in body delete", req.body)
     const leadId = req.body.leadId;
@@ -118,7 +117,6 @@ router.post("/delete", async (req, res) => {
         return res.status(500).send(`Internal Server Error ${error.message}`);
     }
 });
-
 
 
 
