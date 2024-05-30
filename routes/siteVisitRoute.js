@@ -40,29 +40,29 @@ router.post("/siteVisitById",verifyToken, async (req, res) => {
     }
 })
 
-//site visit post
+//site visit post....
 router.post("/post", verifyToken, async (req, res) => {
     const {  leadId  ,siteVisitDate  , propertyType   , status , notes } = req.body
     try {
 
         let leadDetails = await Lead.findOne({leadId})
-        let {name , email ,salesExecutiveEmail , salesExecutiveName , project  } = leadDetails
+
+        console.log("lead details" , leadDetails)
+
+        
 
         let id = await generateUniqueId()
     
         const postSiteVisit = new Sitevisit({
             siteVisitId : id,
-            name,
-            email,
             leadId,
             date : formattedDate ,
             project,
             propertyType,
-            salesExecutiveEmail,
-            salesExecutiveName,
             status,
             notes,
-            siteVisitDate
+            siteVisitDate,
+            leadDetails : leadDetails
         })
         await postSiteVisit.save()
         return res.status(200).send("Site visit posted successfully")
@@ -109,8 +109,6 @@ router.post("/delete",async (req, res) => {
 
     console.log("check whats coming in body delete...", req.body)
     const siteVisitId = req.body.siteVisitId;
-    
-
     
     console.log("site visit id" , siteVisitId)
 
