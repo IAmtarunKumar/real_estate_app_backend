@@ -88,7 +88,7 @@ router.post("/post", async (req, res) => {
 //lead update
 router.post("/update",verifyToken, async (req, res) => {
     console.log("site visit update api calling", req.body)
-    const { leadId , siteVisitId ,siteVisitDate ,  project , propertyType   , status , notes } = req.body
+    const { leadId , siteVisitId ,siteVisitDate ,  project , date , propertyType   , status , notes } = req.body
 
 
     try {
