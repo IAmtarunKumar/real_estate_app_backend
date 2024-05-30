@@ -8,7 +8,7 @@ const router =  express.Router()
 
 router.get("/" , async(req,res)=>{
     try {
-        return res.status(200).send("site visit route working fine") 
+        return res.status(200).send("booking route working fine") 
     } catch (error) {
         console.log("error:" ,error)
         return res.status(500).send(`Internal server error ${error.message}`)
@@ -29,7 +29,7 @@ router.get("/get",verifyToken,async (req, res) => {
 
 //get sitevisit by id
 
-router.post("/siteVisitById",verifyToken, async (req, res) => {
+router.post("/bookingById",verifyToken, async (req, res) => {
     try {
         const leadId = req.body.leadId
         const allLead = await Sitevisit.findOne({ leadId })
@@ -42,7 +42,7 @@ router.post("/siteVisitById",verifyToken, async (req, res) => {
 
 //site visit post....
 router.post("/post", verifyToken, async (req, res) => {
-    const {  leadId  ,siteVisitDate  , propertyType   , status , notes ,project } = req.body
+    const {  leadId  ,siteVisitDate  , propertyType   , status , notes } = req.body
     try {
 
         let leadDetails = await Lead.findOne({leadId})

@@ -21,6 +21,7 @@ app.use(express.json())
 const bodyParser = require("body-parser")
 const taskRouter = require("./routes/taskRoute.js")
 const siteVisitRouter = require("./routes/siteVisitRoute.js")
+const bookingRouter = require("./routes/bookingRoute.js")
 
 ///
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -43,6 +44,7 @@ app.use("/lead", leadRouter)
 app.use("/dashboard", dashboardRouter)
 app.use("/task" , taskRouter)
 app.use("/sitevisit" , siteVisitRouter)
+app.use("/booking" ,bookingRouter)
 
 
 app.use("/test" , testRouter)
