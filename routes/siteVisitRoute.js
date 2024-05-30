@@ -17,7 +17,7 @@ router.get("/" , async(req,res)=>{
 
 
 //get all site visit
-router.get("/get",verifyToken,async (req, res) => {
+router.get("/get",async (req, res) => {
     try {
         const allLead = await Sitevisit.find()
         return res.status(200).send(allLead)
@@ -41,15 +41,13 @@ router.post("/siteVisitById",verifyToken, async (req, res) => {
 })
 
 //site visit post....
-router.post("/post", verifyToken, async (req, res) => {
+router.post("/post", async (req, res) => {
     const {  leadId  ,siteVisitDate  , propertyType   , status , notes ,project } = req.body
     try {
 
         let leadDetails = await Lead.findOne({leadId})
 
         console.log("lead details" , leadDetails)
-
-        
 
         let id = await generateUniqueId()
     
@@ -62,7 +60,8 @@ router.post("/post", verifyToken, async (req, res) => {
             status,
             notes,
             siteVisitDate,
-            leadDetails : leadDetails
+            leadDetails : leadDetails,
+            project
         })
         await postSiteVisit.save()
         return res.status(200).send("Site visit posted successfully")
