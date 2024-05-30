@@ -8,7 +8,6 @@ const siteVisitSchema = mongoose.Schema({
     siteVisitDate: { type: String, required: false },
     status: { type: String, required: false },
     notes: { type: String, required: false },
-    leadDetails : {type : Object , required : false},
     project : {type : Object , required : false},
 
 

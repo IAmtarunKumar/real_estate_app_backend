@@ -20,7 +20,21 @@ router.get("/" , async(req,res)=>{
 router.get("/get",async (req, res) => {
     try {
         const allLead = await Sitevisit.find()
-        return res.status(200).send(allLead)
+
+        let resArray = []
+        for(let data of allLead){
+            let leadId = data.leadId
+
+            let foundLead = await Lead.findOne({leadId})
+
+            data.leadDetails = foundLead
+
+            resArray.push(data)
+        }
+
+
+
+        return res.status(200).send(resArray)
     } catch (error) {
         console.log(error.message)
         return res.status(500).send(`Internal server error ${error.message}`)
@@ -45,10 +59,6 @@ router.post("/post", async (req, res) => {
     const {  leadId  ,siteVisitDate  , propertyType   , status , notes ,project } = req.body
     try {
 
-        let leadDetails = await Lead.findOne({leadId})
-
-        console.log("lead details" , leadDetails)
-
         let id = await generateUniqueId()
     
         const postSiteVisit = new Sitevisit({
@@ -60,7 +70,7 @@ router.post("/post", async (req, res) => {
             status,
             notes,
             siteVisitDate,
-            leadDetails : leadDetails,
+           
             project
         })
         await postSiteVisit.save()
@@ -78,7 +88,7 @@ router.post("/post", async (req, res) => {
 //lead update
 router.post("/update",verifyToken, async (req, res) => {
     console.log("site visit update api calling", req.body)
-    const { leadId , siteVisitId ,siteVisitDate, date ,  project , propertyType , salesExecutiveEmail , salesExecutiveName  , status , notes } = req.body
+    const { leadId , siteVisitId ,siteVisitDate ,  project , propertyType   , status , notes } = req.body
 
 
     try {
