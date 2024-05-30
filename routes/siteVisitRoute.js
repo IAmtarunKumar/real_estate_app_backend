@@ -93,12 +93,9 @@ router.post("/update",verifyToken, async (req, res) => {
 
     try {
 
-        let foundUser = await User.findOne({ "name": salesExecutiveName })
-        if (foundUser) {
-            salesExecutiveEmail = foundUser.email
-        }
+    
      
-        const updatedUser = await Sitevisit.findOneAndUpdate({ siteVisitId }, {leadId , siteVisitDate, date , project, propertyType , salesExecutiveEmail ,  salesExecutiveName ,  status , notes}, {
+        const updatedUser = await Sitevisit.findOneAndUpdate({ siteVisitId }, {leadId , siteVisitDate, date , project, propertyType  ,  status , notes}, {
             new: true,
         });
         if (!updatedUser) {
