@@ -19,28 +19,48 @@ router.get("/" , async(req,res)=>{
 //get all site visit
 router.get("/get", async (req, res) => {
     try {
-        const allSiteVisits = await Sitevisit.find();
-        const leadIds = allSiteVisits.map(siteVisit => siteVisit.leadId);
 
-        const leads = await Lead.find({ leadId: { $in: leadDirectoryIds } });
-        const leadMap = leads.reduce((map, lead) => {
-            map[lead.leadId] = lead.toObject(); // Convert to plain object and index by leadId
-            return map;
-        }, {});
+        //array ke andar object aayega or iss object me lead Id
+        let sitevisits = await Sitevisit.find()
+        let leads = await Lead.find()
+        var modifiedSiteVisits = [];
 
-        const resArray = allSiteVisits.map(siteVisit => {
-            return {
-                ...siteVisit.toObject(), // Convert Mongoose document to plain object
-                leadDetails: leadMap[siteVisit.leadId] // Attach corresponding lead details
-            };
-        });
+        var leadsObject = {}
+        leads.forEach((lead) => {
+            leadsObject[lead.leadId] = lead
+        })
+        // console.log(leadsObject) // leadObject
 
-        res.status(200).send(resArray);
+        // console.log(leadsObject["531863"].name) // sd
+
+        for (var i = 0; i < sitevisits.length; i++) {
+            var id = sitevisits[i].leadId;
+            // console.log(leadsObject[id]);
+            // sitevisits[i].leadDetails = leadsObject[id];
+            modifiedSiteVisits.push({
+                _id: sitevisits[i]._id,
+                siteVisitId: sitevisits[i].siteVisitId,
+                leadId: sitevisits[i].leadId,
+                date: sitevisits[i].date,
+                siteVisitDate: sitevisits[i].siteVisitDate,
+                project: sitevisits[i].project,
+                status: sitevisits[i].status,
+                notes: sitevisits[i].notes,
+                _v: sitevisits[i]._v,
+                leadDetails: leadsObject[id]
+            })
+        }
+
+        console.log("sitevisits", modifiedSiteVisits)
+
+
+        return res.status(200).send(modifiedSiteVisits);
     } catch (error) {
-        console.error("Error retrieving site visits and leads:", error.message);
-        res.status(500).send(`Internal server error: ${error.message}`);
+        console.log(error.message);
+        return res.status(500).send(`Internal server error: ${error.message}`);
     }
 });
+
 //get sitevisit by id
 
 router.post("/siteVisitById",verifyToken, async (req, res) => {
