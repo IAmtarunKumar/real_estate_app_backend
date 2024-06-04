@@ -98,7 +98,7 @@ router.post("/post", verifyToken, async (req, res) => {
             leadDetails : leadDetails
         })
         await postBooking.save()
-        return res.status(200).send("Site visit posted successfully")
+        return res.status(200).send("Booking posted successfully")
         
     } catch (error) {
         console.log("error  : " , error)
