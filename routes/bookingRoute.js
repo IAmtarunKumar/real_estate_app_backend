@@ -18,7 +18,7 @@ router.get("/" , async(req,res)=>{
 
 
 //get all site visit
-router.get("/get",async (req, res) => {
+router.get("/get",verifyToken,async (req, res) => {
     try {
 
         //array ke andar object aayega or iss object me lead Id
