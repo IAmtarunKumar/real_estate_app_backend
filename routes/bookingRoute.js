@@ -1,5 +1,5 @@
 const express = require("express")
-const Sitevisit = require("../models/siteVisit")
+const Booking = require("../models/booking")
 const formattedDate = require("../function/formatedDate")
 const generateUniqueId = require("../function/uniqueId")
 const verifyToken = require("../middleware/auth")
@@ -64,9 +64,9 @@ router.get("/get",verifyToken,async (req, res) => {
 
 router.post("/bookingById",verifyToken, async (req, res) => {
     try {
-        const leadId = req.body.leadId
-        const allLead = await Sitevisit.findOne({ leadId })
-        return res.status(200).send(allLead)
+        const bookingId = req.body.bookingId
+        const allBooking= await Booking.findOne({ bookingId })
+        return res.status(200).send(allBooking)
     } catch (error) {
         console.log(error.message)
         return res.status(500).send(`Internal server error ${error.message}`)
@@ -75,7 +75,7 @@ router.post("/bookingById",verifyToken, async (req, res) => {
 
 //site visit post....
 router.post("/post", verifyToken, async (req, res) => {
-    const {  leadId  ,siteVisitDate  , propertyType   , status , notes  , project} = req.body
+    const {  leadId, bookingDate  , propertyType   , status , notes  , project} = req.body
     try {
 
         let leadDetails = await Lead.findOne({leadId})
@@ -86,18 +86,18 @@ router.post("/post", verifyToken, async (req, res) => {
 
         let id = await generateUniqueId()
     
-        const postSiteVisit = new Sitevisit({
-            siteVisitId : id,
+        const postBooking = new Booking({
+            bookingId : id,
             leadId,
             date : formattedDate ,
             project,
             propertyType,
             status,
             notes,
-            siteVisitDate,
+            bookingDate,
             leadDetails : leadDetails
         })
-        await postSiteVisit.save()
+        await postBooking.save()
         return res.status(200).send("Site visit posted successfully")
         
     } catch (error) {
@@ -112,7 +112,7 @@ router.post("/post", verifyToken, async (req, res) => {
 //lead update
 router.post("/update",verifyToken, async (req, res) => {
     console.log("site visit update api calling", req.body)
-    const { leadId , siteVisitId ,siteVisitDate, date ,  project , propertyType , salesExecutiveEmail , salesExecutiveName  , status , notes } = req.body
+    const { leadId , bookingId ,bookingDate, date ,  project , propertyType , salesExecutiveEmail , salesExecutiveName  , status , notes } = req.body
 
 
     try {
@@ -122,7 +122,7 @@ router.post("/update",verifyToken, async (req, res) => {
             salesExecutiveEmail = foundUser.email
         }
      
-        const updatedUser = await Sitevisit.findOneAndUpdate({ siteVisitId }, {leadId , siteVisitDate, date , project, propertyType , salesExecutiveEmail ,  salesExecutiveName ,  status , notes}, {
+        const updatedUser = await Booking.findOneAndUpdate({ bookingId }, {leadId  , bookingDate, date , project, propertyType , salesExecutiveEmail ,  salesExecutiveName ,  status , notes}, {
             new: true,
         });
         if (!updatedUser) {
@@ -141,22 +141,22 @@ router.post("/update",verifyToken, async (req, res) => {
 router.post("/delete",async (req, res) => {
 
     console.log("check whats coming in body delete...", req.body)
-    const siteVisitId = req.body.siteVisitId;
+    const siteVisitId = req.body.bookingId;
     
-    console.log("site visit id" , siteVisitId)
+    // console.log("site visit id" , siteVisitId)
 
     try {
-        const foundUser = await Sitevisit.findOne({ siteVisitId : siteVisitId })
+        const foundUser = await Booking.findOne({ bookingId : bookingId })
         
 
-        console.log("found site visit" , foundUser)
+        // console.log("found site visit" , foundUser)
 
-        if (!foundUser) return res.status(400).send("Site visit not found!")
+        if (!foundUser) return res.status(400).send("booking not found!")
         const deletedUser = await Sitevisit.findOneAndDelete({ siteVisitId });
         if (!deletedUser) {
-            return res.status(400).send(`Site visit not deleted!`);
+            return res.status(400).send(`booking not deleted!`);
         }
-        return res.status(200).send("Site visit Deleted successfully");
+        return res.status(200).send("booking Deleted successfully");
     } catch (error) {
         return res.status(500).send(`Internal Server Error ${error.message}`);
     }
