@@ -19,14 +19,47 @@ router.get("/" , async(req,res)=>{
 //get all site visit
 router.get("/get",verifyToken,async (req, res) => {
     try {
-        const allLead = await Sitevisit.find()
-        return res.status(200).send(allLead)
-    } catch (error) {
-        console.log(error.message)
-        return res.status(500).send(`Internal server error ${error.message}`)
-    }
-})
 
+        //array ke andar object aayega or iss object me lead Id
+        let bookings= await Booking.find()
+        let leads = await Lead.find()
+        var modifiedSiteVisits = [];
+
+        var leadsObject = {}
+        leads.forEach((lead) => {
+            leadsObject[lead.leadId] = lead
+        })
+        // console.log(leadsObject) // leadObject
+
+        // console.log(leadsObject["531863"].name) // sd
+
+        for (var i = 0; i < bookings.length; i++) {
+            var id = bookings[i].leadId;
+            // console.log(leadsObject[id]);
+            // bookings[i].leadDetails = leadsObject[id];
+            modifiedSiteVisits.push({
+                _id: bookings[i]._id,
+                siteVisitId: bookings[i].siteVisitId,
+                leadId: bookings[i].leadId,
+                date: bookings[i].date,
+                siteVisitDate: bookings[i].siteVisitDate,
+                project: bookings[i].project,
+                status: bookings[i].status,
+                notes: bookings[i].notes,
+                _v: bookings[i]._v,
+                leadDetails: leadsObject[id]
+            })
+        }
+
+        console.log("bookings", modifiedSiteVisits)
+
+
+        return res.status(200).send(modifiedSiteVisits);
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).send(`Internal server error: ${error.message}`);
+    }
+})
 //get sitevisit by id
 
 router.post("/bookingById",verifyToken, async (req, res) => {
