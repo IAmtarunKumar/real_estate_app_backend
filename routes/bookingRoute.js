@@ -42,7 +42,7 @@ router.post("/bookingById",verifyToken, async (req, res) => {
 
 //site visit post....
 router.post("/post", verifyToken, async (req, res) => {
-    const {  leadId  ,siteVisitDate  , propertyType   , status , notes } = req.body
+    const {  leadId  ,siteVisitDate  , propertyType   , status , notes  , project} = req.body
     try {
 
         let leadDetails = await Lead.findOne({leadId})
