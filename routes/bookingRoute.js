@@ -30,9 +30,7 @@ router.get("/get",async (req, res) => {
         leads.forEach((lead) => {
             leadsObject[lead.leadId] = lead
         })
-        // console.log(leadsObject) // leadObject
-
-        // console.log(leadsObject["531863"].name) // sd
+     
 
         for (var i = 0; i < bookings.length; i++) {
             var id = bookings[i].leadId;
