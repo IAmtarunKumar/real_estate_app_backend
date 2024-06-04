@@ -1,9 +1,10 @@
 const express = require("express")
 const Booking = require("../models/booking")
 const formattedDate = require("../function/formatedDate")
-const generateUniqueId = require("../function/uniqueId")
+
 const verifyToken = require("../middleware/auth")
 const Lead = require("../models/lead")
+const generateUniqueId = require("../function/uniqueId")
 const router =  express.Router()
 
 router.get("/" , async(req,res)=>{
@@ -85,6 +86,8 @@ router.post("/post", verifyToken, async (req, res) => {
         
 
         let id = await generateUniqueId()
+
+        console.log("booking id" , id)
     
         const postBooking = new Booking({
             bookingId : id,
