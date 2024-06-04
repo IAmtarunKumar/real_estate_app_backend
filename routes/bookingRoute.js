@@ -154,7 +154,7 @@ router.post("/delete",async (req, res) => {
         // console.log("found site visit" , foundUser)
 
         if (!foundUser) return res.status(400).send("booking not found!")
-        const deletedUser = await Sitevisit.findOneAndDelete({ siteVisitId });
+        const deletedUser = await Booking.findOneAndDelete({ bookingId });
         if (!deletedUser) {
             return res.status(400).send(`booking not deleted!`);
         }
