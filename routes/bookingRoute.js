@@ -141,7 +141,7 @@ router.post("/update",verifyToken, async (req, res) => {
 router.post("/delete",async (req, res) => {
 
     console.log("check whats coming in body delete...", req.body)
-    const siteVisitId = req.body.bookingId;
+    const bookingId = req.body.bookingId;
     
     // console.log("site visit id" , siteVisitId)
 
